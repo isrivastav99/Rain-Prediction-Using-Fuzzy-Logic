@@ -89,10 +89,12 @@ class Temperature_Input{
 public:
     float value;
     //All between 0-1
-   /* float freezing_value;
-    float cool_value;
-    float warm_value;
-    float hot_value;*/
+   /*
+        <= 10   ---- poor       (cold)
+        5-25    ---- low        (warm)
+        20-40   ---- medium     (hot)
+        35>=    ---- high       (very hot)
+   */
     float low, poor, medium, high;
     
 
@@ -107,46 +109,31 @@ public:
     void temp_fuzzify(float t)
     {
         this->value = t;
-        if(t<=30)
+        if(t<=10)
         {
-            this->freezing_value = 1;
+            this->poor = 1;
         }
-        else if(t>30 && t<50)
+        else if(t>5 && t<=25)
         {
             float temp1 = (50 - t)/20;
-            this->freezing_value = temp1;
+            this->poor = temp1;
             float temp2 = (t-30)/20;
-            this->cool_value = temp2;
+            this->low = temp2;
         }
-        else if(t == 50)
-        {
-            this->cool_value= 1;
-
-        }
-        else if (t>50 && t<70)
+        else if (t>20 && t<=40)
         {
             float temp1 = (70 - t)/20;
-            this->cool_value = temp1;
+            this->low = temp1;
             float temp2 = (t-50)/20;
-            this->warm_value = temp2;
+            this->medium = temp2;
         }
-        else if(t == 70)
-        {
-            this->warm_value= 1;
-
-        }
-        else if (t>70 && t<90)
+        else if (t>=35)
         {
             float temp1 = (90 - t)/20;
-            this->warm_value = temp1;
+            this->medium = temp1;
             float temp2 = (t-70)/20;
-            this->hot_value = temp2;
+            this->hot = temp2;
         }
-        else if(t>=90)
-        {
-            this->hot_value = 1;
-        }
-
     }
 
 };
