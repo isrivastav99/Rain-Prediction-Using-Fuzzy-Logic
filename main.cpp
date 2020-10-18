@@ -1,90 +1,37 @@
 #include <iostream>
 #include<bits/stdc++.h>
 using namespace std;
-class Speed_Output{
+class RainRate_Output{
 public:
     float value;
-    float slow_value;
-    float fast_value;
+    float poor_value;
+    float low_value
+    float medium_value
+    float high_value
+    float extreme_value;
     Speed_Output()
     {
-        this->slow_value = 0;
-        this->fast_value = 0;
+        this->low_values = 0;
+        this->poor_value = 0;
+        this->medium_value = 0;
+        this->high_value = 0;
+        this->extreme_value = 0;
     }
-    void defuzzify(float f, float s)
+    void defuzzify(float l, float p, float m, float h, float e )
     {
-        this->fast_value = f;
-        this->slow_value = s;
-        // Maximum of slow speed = 25
-        // Minimum of Fast speed = 75
+        this->medium_value = m;
+        this->low_value = l;
+        this->poor_value = p;
+        this->high_value = h;
+        this->extreme_value = e;
+        
         // Weighted mean calculation
-        float final = (((25 * s) + (75 * f))/(s + f));
+        float final = (((5 * p) + (11* l) + (21 * m) + (40 * h) + (65 * e))/(p + l + m + h + e));
         this->value = final;
 
     }
 };
 
-/* 0-20 = Sunny
- * 20-40 -> Sunny, Partly Cloudy
- * 40-60 = Cloudy
- * 60-80 -> Cloudy, Overcast
- * 80-100 = Overcast*/
-class Cover_Input{
-public:
-    float value;
-    float sunny_value;
-    float cloudy_value;
-    float overcast_value;
-
-    Cover_Input()
-    {
-        this->cloudy_value = 0;
-        this->overcast_value = 0;
-        this->sunny_value = 0;
-    }
-    void cover_fuzzify(float c)
-    {
-        this->value = c;
-        if(c<=20)
-        {
-            this->sunny_value = 1;
-        }
-        else if(c>20 && c<40)
-        {
-            float temp1 = (40-c)/20;
-            this->sunny_value = temp1;
-            float temp2 = (c-20)/30;
-            this->cloudy_value = temp2;
-        }
-        else if(c>=40 && c<=50)
-        {
-            this->cloudy_value = (c-20)/30;
-        }
-        else if(c>50 && c<=60)
-        {
-            this->cloudy_value = (80-c)/30;
-        }
-        else if(c>60 && c<80)
-        {
-            float temp1 = (80-c)/30;
-            this->cloudy_value = temp1;
-            float temp2 = (c-60)/20;
-            this->overcast_value = temp2;
-
-        }
-        else if(c>=80)
-        {
-            this->overcast_value = 1;
-        }
-    }
-};
-
-
-/* 0-30F = Freezing
- * 30-50F -> Freezing, Cool
- * 50-70F -> Cool, Warm
- * 70-90F -> Warm, Hot
- * >90 = Hot */
 class Temperature_Input{
 public:
     float value;
@@ -285,47 +232,70 @@ public:
 void Rule_Evaluate(Temperature_Input t, Pressure_Input p, Humidity_Input h)
 {
     Rain_Output r;
-    float rpoor=0, rmedium=0, rlow=0, rhigh = 0;
-    if(h.high && t.poor && p.medium){
+    float rpoor=0, rmedium=0, rlow=0, rhigh = 0, rextreme = 0;
+    //Humidity = poor
+    if(h.poor && t.low && p.high){
+        rpoor = min(h.poor, min(t.low, p.high));
+    }
+    if(h.poor && t.low && p.medium){
+        rpoor = min(h.poor, min(t.low, p.medium));
+    }
+    if(h.poor && t.low &&  p.low){
+        rpoor = min(h.poor, min(t.low, p.low));
+    }
+    if(h.poor && t.medium && p.high){
+        rpoor = min(h.poor, min(t.medium, p.high));
+    }
+    if(h.poor && t.medium && p.medium){
+        rpoor = min(h.poor, min(t.medium, p.medium));
+    }
+    if(h.poor && t.medium && p.low){
+        rpoor = min(h.poor, min(t.medium, p.low));
+    }
     
+    //humidity = low
+    if(h.low && t.medium && p.medium){
+        rpoor = min(h.low, min(t.medium, p.low));
+    } 
+    if(h.low && t.medium && p.medium){
+        rpoor = min(h.low, min(t.medium, p.medium));
+    } 
+    if(h.low && t.medium && p.medium){
+        rpoor = min(h.low, min(t.medium, p.high));
+    } 
+    if(h.low && t.low && p.low){
+        rpoor = min(h.low, min(t.low, p.low));
+    } 
+    if(h.low && t.low && p.medium){
+        rmedium = min(h.low, min(t.low, p.medium));
+    } 
+    if(h.low &&t.low && p.high){
+        rlow = min(h.low, min(t.low, p.high));
+    } 
+    
+    
+    if(h.medium && t.low && p.medium){
+        rextreme = min(h.medium, min(t.low, p.medium));
+    }
+    
+    if(h.medium && t.poor && p.high){
+        rlow = min(h.medium, min(t.poor, p.high));
+    }
+   
+    if(h.medium && t.low && p.high){
+        rhigh = min(h.medium, min(t.low, p.high));
+    } 
+    if(h.high && t.poor && p.medium){
+        rlow = min(h.high, min(t.poor, p.medium));
     }
     if(h.high && t.low && p.medium){
-    
-    }
-    if(h.medium && t.low && p.medium){
-    
+        rpoor = min(h.high, min(t.poor, p.medium));
     }
     if(h.high && t.poor && p.high){
-    
+        rmedium = min(h.high, min(t.poor, p.high));
     }
-    if(h.medium && t.poor && p.high){
-    
-    }
-   if(h.poor && t.poor && p.high){
-    
-   }
-    if(h.low && t.medium && p.medium){
-    
-    } 
-    // Only 2 rules
-    // Only 2 output values
-   /* Speed_Output s;
-    float strength_fast = 0;
-    float strength_slow = 0;
-    if(t.warm_value && c.sunny_value)
-    {
-        strength_fast = min(t.warm_value,c.sunny_value);
-    }
-    if(t.cool_value && c.cloudy_value)
-    {
-        strength_slow = min(t.cool_value,c.cloudy_value);
-    }*/
-    s.defuzzify(strength_fast,strength_slow);
-    cout<<s.slow_value<<endl;
-    cout<<s.fast_value<<endl;
-    cout<<s.value<<" Final";
-
-
+    r.defuzzify(rpoor, rlow, rmedium, rhigh, rextreme);
+    cout<<"Defuzzified Rain Rate : "<<r.value<<endl;
 }
 
 int main() {
@@ -338,10 +308,6 @@ int main() {
     cout<<c.sunny_value<<endl;
     cout<<c.cloudy_value<<" Cover"<<endl;
     Rule_Evaluate(t,c);
-
-
-
-
 
     return 0;
 }
