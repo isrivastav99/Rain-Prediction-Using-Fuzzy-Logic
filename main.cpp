@@ -109,35 +109,176 @@ public:
     void temp_fuzzify(float t)
     {
         this->value = t;
-        if(t<=10)
+        if(t<=5)
         {
             this->poor = 1;
         }
-        else if(t>5 && t<=25)
+        else if(t>5 && t<=10)
         {
-            float temp1 = (50 - t)/20;
+            float temp1 = (10 - t)/5;
             this->poor = temp1;
-            float temp2 = (t-30)/20;
+            float temp2 = (t-5)/5;
             this->low = temp2;
         }
-        else if (t>20 && t<=40)
+        else if (t>10 && t<=20)
         {
-            float temp1 = (70 - t)/20;
+            this->low = 1;
+        }
+        else if(t>20 && t<=25)
+        {
+            float temp1 = (50 - t)/20;
             this->low = temp1;
-            float temp2 = (t-50)/20;
+            float temp2 = (t-30)/20;
             this->medium = temp2;
         }
-        else if (t>=35)
+        else if (t>25 && t<=35)
         {
-            float temp1 = (90 - t)/20;
+            this->medium = 1;
+        }
+        else if (t>35 && t<=40)
+        {
+            float temp1 = (40 - t)/5;
             this->medium = temp1;
-            float temp2 = (t-70)/20;
-            this->hot = temp2;
+            float temp2 = (t-35)/5;
+            this->high = temp2;
+        }
+        else if (t>40)
+        {
+            this->hot = 1;
         }
     }
 
 };
+class Pressure_Input{
+public:
+    float value;
+    //All between 0-1
+   /*
+    SEA LEVEL PRESSURE
+        <= 1002   ---- poor       
+        1000-1006    ---- low        
+        1004-1010   ---- medium     
+        1008>=    ---- high       
+   */
+    float low, poor, medium, high;
+    
 
+    Pressure_Input()
+    {
+        this->value = 0;
+        this->poor = 0;
+        this->low = 0;
+        this->medium = 0;
+        this->high = 0;
+    }
+    void press_fuzzify(float p)
+    {
+        this->value = p;
+        if(p<=1000)
+        {
+            this->poor = 1;
+        }
+        else if(p>1000 && p<=1002)
+        {
+            float pre1 = (1002 - p)/2;
+            this->poor = pre1;
+            float pre2 = (p-1000)/2;
+            this->low = pre2;
+        }
+        else if (p>1002 && p<=1004)
+        {
+            float low = 1;
+        }
+        else if(p>1004 && p<=1006)
+        {
+            float pre1 = (1006 - p)/2;
+            this->low = pre1;
+            float pre2 = (p-1004)/2;
+            this->medium = pre2;
+        }
+        else if (p>1006 && p<=1008)
+        {
+            float medium = 1;
+        }
+        else if(p>1008 && p<=1010)
+        {
+            float pre1 = (1010 - p)/2;
+            this->medium = pre1;
+            float pre2 = (p-1006)/2;
+            this->high = pre2;
+        }
+        else if (p>1010)
+        {
+            this->high = 1;
+        }
+    }
+
+};
+class Humidity_Input{
+public:
+    float value;
+    //All between 0-1
+   /*
+    Humidity percentage
+        <=    ---- poor       
+        -    ---- low        
+        -   ---- medium     
+        >=    ---- high       
+   */
+    float low, poor, medium, high;
+    
+
+    Humidity_Input()
+    {
+        this->value = 0;
+        this->poor = 0;
+        this->low = 0;
+        this->medium = 0;
+        this->high = 0;
+    }
+    void hum_fuzzify(float h)
+    {
+        this->value = h;
+        if(h<=30)
+        {
+            this->poor = 1;
+        }
+        else if(h>30 && h<=40)
+        {
+            float pre1 = (40 - h)/10;
+            this->poor = pre1;
+            float pre2 = (h-30)/10;
+            this->low = pre2;
+        }
+        else if (h>40 && h<=50)
+        {
+            float low = 1;
+        }
+        else if(h>50 && h<=60)
+        {
+            float pre1 = (60 - h)/10;
+            this->low = pre1;
+            float pre2 = (h-50)/10;
+            this->medium = pre2;
+        }
+        else if (h>60 && h<=70)
+        {
+            float medium = 1;
+        }
+        else if(h>70 && h<=80)
+        {
+            float pre1 = (80 - h)/10;
+            this->medium = pre1;
+            float pre2 = (h-70)/10;
+            this->high = pre2;
+        }
+        else if (h>80)
+        {
+            this->high = 1;
+        }
+    }
+
+};
 /* Sunny *  Warm = Fast
  * Cloudy * Cool = Slow */
 
