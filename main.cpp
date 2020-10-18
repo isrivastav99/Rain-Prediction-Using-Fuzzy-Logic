@@ -56,40 +56,40 @@ public:
     void temp_fuzzify(float t)
     {
         this->value = t;
-        if(t<=5)
+        if(t<=10)
         {
             this->poor = 1;
         }
-        else if(t>5 && t<=10)
+        else if(t>10 && t<20)
         {
-            float temp1 = (10 - t)/5;
+            float temp1 = (20 - t)/10;
             this->poor = temp1;
-            float temp2 = (t-5)/5;
+            float temp2 = (t-10)/10;
             this->low = temp2;
         }
-        else if (t>10 && t<=20)
+        else if (t==20)
         {
             this->low = 1;
         }
-        else if(t>20 && t<=25)
+        else if(t>20 && t<30)
         {
-            float temp1 = (50 - t)/20;
+            float temp1 = (30 - t)/10;
             this->low = temp1;
-            float temp2 = (t-30)/20;
+            float temp2 = (t-20)/10;
             this->medium = temp2;
         }
-        else if (t>25 && t<=35)
+        else if (t==30)
         {
             this->medium = 1;
         }
-        else if (t>35 && t<=40)
+        else if (t>30 && t<40)
         {
-            float temp1 = (40 - t)/5;
+            float temp1 = (40 - t)/10;
             this->medium = temp1;
-            float temp2 = (t-35)/5;
+            float temp2 = (t-30)/10;
             this->high = temp2;
         }
-        else if (t>40)
+        else if (t>=40)
         {
             this->hot = 1;
         }
@@ -125,36 +125,36 @@ public:
         {
             this->poor = 1;
         }
-        else if(p>1000 && p<=1002)
+        else if(p>1000 && p<1003)
         {
-            float pre1 = (1002 - p)/2;
+            float pre1 = (1003 - p)/3;
             this->poor = pre1;
-            float pre2 = (p-1000)/2;
+            float pre2 = (p-1000)/3;
             this->low = pre2;
         }
-        else if (p>1002 && p<=1004)
+        else if (p==1003)
         {
             float low = 1;
         }
-        else if(p>1004 && p<=1006)
+        else if(p>1003 && p<1006)
         {
-            float pre1 = (1006 - p)/2;
+            float pre1 = (1006 - p)/3;
             this->low = pre1;
-            float pre2 = (p-1004)/2;
+            float pre2 = (p-1003)/3;
             this->medium = pre2;
         }
-        else if (p>1006 && p<=1008)
+        else if (p==1006)
         {
             float medium = 1;
         }
-        else if(p>1008 && p<=1010)
+        else if(p>1006 && p<1009)
         {
-            float pre1 = (1010 - p)/2;
+            float pre1 = (1009 - p)/3;
             this->medium = pre1;
-            float pre2 = (p-1006)/2;
+            float pre2 = (p-1006)/3;
             this->high = pre2;
         }
-        else if (p>1010)
+        else if (p>=1009)
         {
             this->high = 1;
         }
@@ -190,36 +190,36 @@ public:
         {
             this->poor = 1;
         }
-        else if(h>30 && h<=40)
+        else if(h>30 && h<=50)
         {
-            float pre1 = (40 - h)/10;
+            float pre1 = (50 - h)/20;
             this->poor = pre1;
-            float pre2 = (h-30)/10;
+            float pre2 = (h-30)/20;
             this->low = pre2;
         }
-        else if (h>40 && h<=50)
+        else if (h==50)
         {
             float low = 1;
         }
-        else if(h>50 && h<=60)
+        else if(h>50 && h<70)
         {
-            float pre1 = (60 - h)/10;
+            float pre1 = (70 - h)/20;
             this->low = pre1;
-            float pre2 = (h-50)/10;
+            float pre2 = (h-50)/20;
             this->medium = pre2;
         }
-        else if (h>60 && h<=70)
+        else if (h==70)
         {
             float medium = 1;
         }
-        else if(h>70 && h<=80)
+        else if(h>70 && h<=90)
         {
-            float pre1 = (80 - h)/10;
+            float pre1 = (90 - h)/20;
             this->medium = pre1;
-            float pre2 = (h-70)/10;
+            float pre2 = (h-70)/20;
             this->high = pre2;
         }
-        else if (h>80)
+        else if (h>=90)
         {
             this->high = 1;
         }
