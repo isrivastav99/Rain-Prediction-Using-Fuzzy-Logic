@@ -89,18 +89,20 @@ class Temperature_Input{
 public:
     float value;
     //All between 0-1
-    float freezing_value;
+   /* float freezing_value;
     float cool_value;
     float warm_value;
-    float hot_value;
+    float hot_value;*/
+    float low, poor, medium, high;
+    
 
     Temperature_Input()
     {
         this->value = 0;
-        this->cool_value = 0;
-        this->freezing_value = 0;
-        this->hot_value = 0;
-        this->warm_value = 0;
+        this->poor = 0;
+        this->low = 0;
+        this->medium = 0;
+        this->high = 0;
     }
     void temp_fuzzify(float t)
     {
@@ -152,22 +154,44 @@ public:
 /* Sunny *  Warm = Fast
  * Cloudy * Cool = Slow */
 
-void Rule_Evaluate(Temperature_Input t, Cover_Input c)
+void Rule_Evaluate(Temperature_Input t, Pressure_Input p, Humidity_Input h)
 {
+    Rain_Output r;
+    float rpoor=0, rmedium=0, rlow=0, rhigh = 0;
+    if(h.high && t.poor && p.medium){
+    
+    }
+    if(h.high && t.low && p.medium){
+    
+    }
+    if(h.medium && t.low && p.medium){
+    
+    }
+    if(h.high && t.poor && p.high){
+    
+    }
+    if(h.medium && t.poor && p.high){
+    
+    }
+   if(h.poor && t.poor && p.high){
+    
+   }
+    if(h.low && t.medium && p.medium){
+    
+    } 
     // Only 2 rules
     // Only 2 output values
-    Speed_Output s;
+   /* Speed_Output s;
     float strength_fast = 0;
     float strength_slow = 0;
     if(t.warm_value && c.sunny_value)
     {
         strength_fast = min(t.warm_value,c.sunny_value);
-
     }
     if(t.cool_value && c.cloudy_value)
     {
         strength_slow = min(t.cool_value,c.cloudy_value);
-    }
+    }*/
     s.defuzzify(strength_fast,strength_slow);
     cout<<s.slow_value<<endl;
     cout<<s.fast_value<<endl;
